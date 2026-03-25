@@ -1,25 +1,26 @@
-from django.shortcuts import get_object_or_404, render
+from django.db.models import F
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from .models import Question, Choice
+from django.utils import timezone # Zaman kontrolü için şart
+from .models import Choice, Question
 
-# 1. Ana Sayfa: Soruları Listeler
 def index(request):
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    context = {"latest_question_list": latest_question_list}
-    return render(request, "polls/index.html", context)
+    # pub_date__lte -> "Less Than or Equal" (Şimdiye eşit veya küçük olanlar)
+    latest_question_list = Question.objects.filter(
+        pub_date__lte=timezone.now()
+    ).order_by("-pub_date")[:5]
+    return render(request, "polls/index.html", {"latest_question_list": latest_question_list})
 
-# 2. Detay Sayfası: Soru ve Seçenekleri Gösterir
 def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    # Birisi linki tahmin etse bile gelecekteki soruyu görmesin diye filtre ekledik
+    question = get_object_or_404(Question, pk=question_id, pub_date__lte=timezone.now())
     return render(request, "polls/detail.html", {"question": question})
 
-# 3. Sonuç Sayfası: Oy sonuçlarını gösterir
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, "polls/results.html", {"question": question})
 
-# 4. Oy Verme Fonksiyonu: Veritabanını günceller
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -27,9 +28,9 @@ def vote(request, question_id):
     except (KeyError, Choice.DoesNotExist):
         return render(request, "polls/detail.html", {
             "question": question,
-            "error_message": "Bir seçenek belirlemediniz.",
+            "error_message": "Seçim yapmadınız!",
         })
     else:
-        selected_choice.votes += 1
+        selected_choice.votes = F("votes") + 1
         selected_choice.save()
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))

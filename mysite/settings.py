@@ -30,11 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-
 INSTALLED_APPS = [
+    # Senin uygulamaların (Hepsi burada olmalı)
     'polls.apps.PollsConfig',
     'blog.apps.BlogConfig',
-    'todo.apps.TodoConfig',  # 📝 Yeni eklediğimiz Todo uygulaması
+    'todo.apps.TodoConfig',
+    'weather.apps.WeatherConfig', # Eğer hala duruyorsa bunu da ekle
+
+    # Django'nun kendi uygulamaları
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
