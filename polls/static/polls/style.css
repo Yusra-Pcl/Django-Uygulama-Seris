@@ -1,0 +1,37 @@
+/* Sayfanın genel arka planı */
+body {
+    background: linear-gradient(135px, #f5f7fa 0%, #c3cfe2 100%); /* Hafif geçişli, göz yormayan bir renk */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+/* Soruların listelendiği ana kutu */
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 400px;
+}
+
+/* Her bir soru linki (Kutucuklar) */
+li a {
+    display: block;
+    background: white; /* Soruların arka planı beyaz kalsın ama... */
+    margin-bottom: 12px;
+    padding: 15px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 600;
+    border-radius: 12px; /* Köşeleri yuvarladık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Hafif gölge ekledik */
+    transition: all 0.3s ease; /* Hareket efekti için */
+}
+
+/* Fareyle üzerine gelince ne olsun? */
+li a:hover {
+    transform: translateY(-3px); /* Yukarı doğru hafifçe zıplar */
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    background: #3498db; /* Maviye döner */
+    color: white;
+}

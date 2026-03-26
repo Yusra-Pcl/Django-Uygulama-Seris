@@ -17,6 +17,6 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ["question_text"]
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.site_header = "Tuna Proje Yönetim Paneli"
-admin.site.site_title = "Tuna Admin"
+admin.site.site_header = "Yüsra Proje Yönetim Paneli"
+admin.site.site_title = " Yüsra paneli"
 admin.site.index_title = "Anket Uygulaması Kontrol Merkezi"
